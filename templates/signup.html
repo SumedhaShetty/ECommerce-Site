@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width" initial-scale="1.0" >
+	<title> Stop2Shop | E-Commerce Website </title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<style type="text/css">
+		.categories h4{
+			text-align: center;
+		}
+		
+		.col-4 .rating, p{
+			text-align: center;
+		}
+		.col-4 h4{
+			text-align: center;
+		}
+	</style>
+
+</head>
+<body>
+	
+	<div class="container">
+		<div class="navbar">
+			<div class="logo"> 
+				<a href="{% url 'main_app:index' %}">
+					<P class="logo" style="
+					font-family: 'Pacifico', cursive;
+					font-size: 27px;
+					border-top: 3px solid red;
+					border-bottom: 3px solid red;
+					border:15%;">Stop2Shop</P>
+				</a>
+			</div>
+		<nav>
+			<ul id="menuitems">
+				<li><a href="{% url 'main_app:index' %}">Home</a></li>
+				<li><a href="{% url 'main_app:category' %}" >Category</a></li>
+                <li><a href="{% url 'main_app:search_product' %}" >Products</a></li>
+				<li><a href="{% url 'main_app:contact' %}">Contact Us</a></li>
+				<li><a href="/accounts/logout/">Logout</a></li>
+			</ul>
+		</nav>
+		<a href="{% url 'main_app:cart' %}">
+			<img src="{% static 'images/cart.png '%}" width="30px" height="30px;">
+		</a>
+		<img src="{% static 'images/menu.png '%}" class="menu-icon" onclick="menutoggle()">
+		</div>
+	</div>
+
+	<!-- account page-->
+<div class="account-page">
+	<div class="container">
+		<div class="row">
+			<div class="col-2">
+				<img src="{% static 'images/bg_image1.jpg' %}" width="100%">
+			</div>
+			<div class="col-2">
+				<div class="form-container">
+					<div class="form-btn">
+						<span onclick="login()">Login</span>
+						<span onclick="register()">Register</span>
+						<hr id="indicator">
+					</div>
+					
+					<form id="loginform" action="accounts/login/" method="post">
+						{% csrf_token %}
+						<input type="text" name="username" placeholder="username">
+						<input type="password" name="password" placeholder="password">
+						<input class="btn" type="Submit">
+						<a href="">Forgot Password</a>
+					</form>
+
+					<form id="regform" action="accounts/register/" method="POST">
+						{% csrf_token %}
+						<input type="text" name="username" placeholder="Username">
+						<input type="password" name="password1" placeholder="Password">
+						<input type="password" name="password2" placeholder="Confirm Password">
+						<input type="email" name="email" placeholder="Email"><br>
+						
+						<input class="btn" type="Submit">
+				
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="footer-col-1">
+				<h3>Download our App</h3>
+				<p>Download app for android and ios</p>
+				<div class="app-logo">
+					<img src="{% static 'images/play-store.png '%}">
+					<img src="{% static 'images/app-store.png '%}">
+				</div>
+			</div>
+			<div class="footer-col-2">
+				<div class="logo"> 
+					<a href="{% url 'main_app:index' %}">
+						<P class="logo" style="
+						font-family: 'Pacifico', cursive;
+						font-size: 27px;
+						color: white;
+						border-top: 3px solid red;
+						border-bottom: 3px solid red;
+						border:15%;">Stop2Shop</P>
+					</a>
+				</div>
+				<p>Our purpose is to deliver your needs to your Doorstep!</p>
+			</div>
+			<div class="footer-col-3">
+				<h3>Useful Links</h3>
+				<ul>
+					<li>Coupons</li>
+					<li>Blog Post</li>
+					<li>Return Policy</li>
+					<li>Join Affiliate</li>
+				</ul>
+			</div>
+			<div class="footer-col-4">
+				<h3>Follow Us</h3>
+				<ul>
+					<li>Facebook</li>
+					<li>Twitter</li>
+					<li>Instagram</li>
+					<li>YouTube</li>
+				</ul>
+			</div>
+		</div>
+		<hr>
+		<p class="copyright">Copyright 2020 E-Commerce</p>
+	</div>
+</div>
+</div>
+
+<!-- javascript for menu toggle -->
+<script type="text/javascript">
+	var menuitems=document.getElementById("menuitems");
+	menuitems.style.maxHeight="0px";
+	function menutoggle(){
+		if(menuitems.style.maxHeight=="0px"){
+			menuitems.style.maxHeight="200px";
+		}
+		else{
+			menuitems.style.maxHeight="0px";
+		}
+	}
+</script>
+
+<!-- toggle form -->
+<script type="text/javascript">
+	var loginform=document.getElementById("loginform");
+	var regform=document.getElementById("regform");
+	var indicator=document.getElementById("indicator");
+		function register(){
+			regform.style.transform="translateX(0px)";
+			loginform.style.transform="translateX(0px)";
+			indicator.style.transform="translateX(100px)";
+		}
+		function login(){
+			regform.style.transform="translateX(300px)";
+			loginform.style.transform="translateX(300px)";
+			indicator.style.transform="translateX(0px)";
+		}
+</script>
+
+
+</body>
+</html>
+

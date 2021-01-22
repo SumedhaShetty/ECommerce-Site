@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width" initial-scale="1.0" >
+	<title>All Products</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<style type="text/css">
+		button{
+			border-radius: 20px;
+			background: #ff523b;
+			color: white;
+			width: 130px;
+			height: 40px;
+			border-color: #ff523b;
+			align-items: right;
+			box-shadow: none;
+		}
+	</style>
+
+</head>
+<body>
+	
+	<div class="container">
+		<div class="navbar">
+			<div class="logo"> 
+				<a href="{% url 'main_app:index' %}">
+					<P class="logo" style="
+					font-family: 'Pacifico', cursive;
+					font-size: 27px;
+					border-top: 3px solid red;
+					border-bottom: 3px solid red;
+					border:15%;">Stop2Shop</P>
+				</a>
+			</div>
+		<nav>
+			<ul id="menuitems">
+				<li><a href="{% url 'main_app:index' %}">Home</a></li>
+				<li><a href="{% url 'main_app:category' %}" >Category</a></li>
+                <li><a href="{% url 'main_app:search_product' %}" >Products</a></li>
+				<li><a href="{% url 'main_app:contact' %}">Contact Us</a></li>
+				<li><a href="/accounts/logout/">Logout</a></li>
+			</ul>
+		</nav>
+		<a href="{% url 'main_app:cart' %}">
+			<img src="{% static 'images/cart.png '%}" width="30px" height="30px;">
+			</a>
+			<img src="{% static 'images/menu.png '%}" class="menu-icon" onclick="menutoggle()">
+		</div>
+	</div>
+
+<!-- cart item details -->
+
+
+<div class="small-container cart-page">
+	
+	<table>
+		<tr>
+			<th>Product</th>
+			<th>Quantity</th>
+			<th>Amount</th>
+		</tr>
+		{% for product in products %}
+		<tr>
+			<td>
+				<div class="cart-info">
+				<img src="{{ product.items_link.image.url }}" >				
+				<div>
+					<p>{{ product.items_link.name }}</p>
+					<small>{{ product.items_link.price }}</small>
+					<br>
+					
+					<a class=" " href="{% url 'main_app:remove_from_cart' id=product.items_link.id %}">Remove</a>
+				</div>
+				</div>
+			</td>			
+			<td><input type="number" value="{{ product.quantity }}"></td>
+			<td>{{ product.product_amount }}</td>
+		</tr>
+		{% endfor %}
+		</table>
+		<div class="total-price">
+			<table>
+			<tr>
+				<td>Subtotal</td>
+				<td>₹{{ order_instance.subtotal }}</td>
+			</tr>
+			<tr>
+				<td>Tax</td>
+				<td>{{ order_instance.tax }}</td>
+			</tr>
+			<tr>
+				<td>Total</td>
+				<td>{{ order_instance.amount }}</td>
+			</tr>
+			</table>
+		</div>
+		<br>
+
+		<div class="payment" style="display: flex; justify-content: flex-end; align-items: center;">
+			<button><a type="submit" href="{% url 'main_app:payment' id=order_instance.id %}" style= "color: white !important;">Purchase!</a></button>
+		</div>
+	</div>
+	
+<!-- footer-->
+<div class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="footer-col-1">
+				<h3>Download our App</h3>
+				<p>Download app for android and ios</p>
+				<div class="app-logo">
+					<img src="{% static 'images/play-store.png' %}">
+					<img src="{% static 'images/app-store.png' %}">
+				</div>
+			</div>
+			<div class="footer-col-2">
+				<div class="logo"> 
+					<a href="{% url 'main_app:index' %}">
+						<P class="logo" style="
+						font-family: 'Pacifico', cursive;
+						font-size: 27px;
+						color: white;
+						border-top: 3px solid red;
+						border-bottom: 3px solid red;
+						border:15%;">Stop2Shop</P>
+					</a>
+				</div>
+				<p>Our purpose is to deliver your needs to your Doorstep!</p>
+			</div>
+			<div class="footer-col-3">
+				<h3>Useful Links</h3>
+				<ul>
+					<li>Coupons</li>
+					<li>Blog Post</li>
+					<li>Return Policy</li>
+					<li>Join Affiliate</li>
+				</ul>
+			</div>
+			<div class="footer-col-4">
+				<h3>Follow Us</h3>
+				<ul>
+					<li>Facebook</li>
+					<li>Twitter</li>
+					<li>Instagram</li>
+					<li>YouTube</li>
+				</ul>
+			</div>
+		</div>
+		<hr>
+		<p class="copyright">Copyright 2020 E-Commerce</p>
+	</div>
+</div>
+</div>
+<!-- javascript for menu toggle -->
+<script type="text/javascript">
+	var menuitems=document.getElementById("menuitems");
+	menuitems.style.maxHeight="0px";
+	function menutoggle(){
+		if(menuitems.style.maxHeight=="0px"){
+			menuitems.style.maxHeight="200px";
+		}
+		else{
+			menuitems.style.maxHeight="0px";
+		}
+	}
+</script>
+
+	
+</body>
+</html>
+

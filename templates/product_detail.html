@@ -1,0 +1,267 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width" initial-scale="1.0" >
+	<title>All Products</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<style type="text/css">
+		.categories h4{
+			text-align: center;
+		}
+		
+		.col-4 .rating, p{
+			text-align: center;
+		}
+		.col-4 h4{
+			text-align: center;
+		}
+	</style>
+
+</head>
+<body>
+	
+	<div class="container">
+		<div class="navbar">
+			<div class="logo"> 
+				<a href="{% url 'main_app:index' %}">
+					<P class="logo" style="
+					font-family: 'Pacifico', cursive;
+					font-size: 27px;
+					border-top: 3px solid red;
+					border-bottom: 3px solid red;
+					border:15%;">Stop2Shop</P>
+				</a>
+			</div>
+		<nav>
+			<ul id="menuitems">
+				<li><a href="{% url 'main_app:index' %}">Home</a></li>
+				<li><a href="{% url 'main_app:category' %}" >Category</a></li>
+                <li><a href="{% url 'main_app:search_product' %}" >Products</a></li>
+				<li><a href="{% url 'main_app:contact' %}">Contact Us</a></li>
+				<li><a href="/accounts/logout/">Logout</a></li>
+			</ul>
+		</nav>
+		<a href="{% url 'main_app:cart' %}">
+		<img src="{% static 'images/cart.png '%}" width="30px" height="30px;">
+		</a>
+		<img src="{% static 'images/menu.png '%}" class="menu-icon" onclick="menutoggle()">
+		</div>
+	</div>
+	
+
+<!-- single product details -->	
+<div class="small-container single-product">
+	<div class="row">
+		<div class="col-2">
+			
+			<img src="{{ product_instance.image.url }}" id="ProductImg" width="100%">
+			<div class="small-img-row">
+				<div class="small-img-col">
+					<img src="{{ product_instance.image1.url }}" width="100%" class="small-img">
+				</div>
+				<div class="small-img-col">
+					<img src="{{ product_instance.image2.url }}" width="100%" class="small-img">
+				</div>
+				<div class="small-img-col">
+					<img src="{{ product_instance.image3.url }}" width="100%" class="small-img">
+				</div>
+			</div>
+
+
+		</div>
+		<div class="col-2">
+
+			<h1>{{ product_instance.name }}</h1>    
+
+			<h4>₹{{ product_instance.price }}</h4>
+
+			<select>
+				<option>Select Size</option>
+				<option>{{ product_instance.size }}</option>
+			</select>
+
+			<form action="{% url 'main_app:add_to_cart' id=product_instance.id %}" method="post">
+			{% csrf_token %} 			
+			<input type="number" name="quantity" value="1">				
+			<input type="submit" class="btn" value="Add To Cart">
+			</form>
+
+			<h3>Product Details <i class="fa fa-indent"></i></h3>
+			<br>
+            <p>{{ product_instance.description }}</p>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="small-container">
+	<h3 style="text-align: center; color: #555; border: 2px solid #555; margin-bottom: 10px;margin-top: 60px; width: 150px; margin-left: 13px;">SIMILAR ITEMS</h3>
+	<div class="row">
+		<div class="col-4">
+			<img src="{% static 'images/product-6.jpg' %}">
+			<h4>Red Printer Tshirt</h4>
+			<div class="rating">
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+			</div>
+			<p>₹ 500.00</p>
+		</div>
+		<div class="col-4">
+			<img src="{% static 'images/product-3.jpg' %}">
+			<h4>Gray Jogging Pants</h4>
+				<div class="rating">
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star-o" aria-hidden="true"></i>
+				<i class="fa fa-star-o" aria-hidden="true"></i>
+			</div>
+			<p>₹675.00</p>
+		</div>
+		<div class="col-4">
+			<img src="{% static 'images/product-4.jpg' %}">
+			<h4>Puma Blue</h4>
+			<div class="rating">
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star-o" aria-hidden="true"></i>
+			</div>
+			<p>₹400.50</p>
+		</div>
+		<div class="col-4">
+			<img src="{% static 'images/product-12.jpg' %}">
+			<h4>Puma Blue</h4>
+			<div class="rating">
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star" aria-hidden="true"></i>
+				<i class="fa fa-star-o" aria-hidden="true"></i>
+			</div>
+			<p>₹400.50</p>
+		</div>
+	</div>
+	</div> <!-- div for small-container -->
+	
+	
+
+<div>
+	<h3 style="letter-spacing: 2px;">&nbsp Reviews </h3><br>
+	{% for feedback in product_instance.item_id.all%}
+	<div style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);margin-bottom:30px;">
+		<div style="padding: 2px 16px;">
+			<h4><b>{{ feedback.fname }}</b></h4>
+			<p style="text-align: left">Verified User</p>
+			<h5>{{ feedback.data }}</h5>
+			<br>
+		</div>
+	</div>
+	{% endfor %}     
+</div>
+
+
+
+<!-- footer-->
+<div class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="footer-col-1">
+				<h3>Download our App</h3>
+				<p>Download app for android and ios</p>
+				<div class="app-logo">
+					<img src="{% static 'images/play-store.png '%}">
+					<img src="{% static 'images/app-store.png '%}">
+				</div>
+			</div>
+			<div class="footer-col-2">
+				<div class="logo"> 
+					<a href="{% url 'main_app:index' %}">
+						<P class="logo" style="
+						font-family: 'Pacifico', cursive;
+						font-size: 27px;
+						color: white;
+						border-top: 3px solid red;
+						border-bottom: 3px solid red;
+						border:15%;">Stop2Shop</P>
+					</a>
+				</div>
+				<p>Our purpose is to deliver your needs to your Doorstep!</p>
+			</div>
+			<div class="footer-col-3">
+				<h3>Useful Links</h3>
+				<ul>
+					<li>Coupons</li>
+					<li>Blog Post</li>
+					<li>Return Policy</li>
+					<li>Join Affiliate</li>
+				</ul>
+			</div>
+			<div class="footer-col-4">
+				<h3>Follow Us</h3>
+				<ul>
+					<li>Facebook</li>
+					<li>Twitter</li>
+					<li>Instagram</li>
+					<li>YouTube</li>
+				</ul>
+			</div>
+		</div>
+		<hr>
+		<p class="copyright">Copyright 2020 E-Commerce</p>
+	</div>
+</div>
+</div>
+
+<!-- javascript for menu toggle -->
+<script type="text/javascript">
+	var menuitems=document.getElementById("menuitems");
+	menuitems.style.maxHeight="0px";
+	function menutoggle(){
+		if(menuitems.style.maxHeight=="0px"){
+			menuitems.style.maxHeight="200px";
+		}
+		else{
+			menuitems.style.maxHeight="0px";
+		}
+	}
+</script>
+
+<!-- js for product gallery -->
+<script>
+	var ProductImg = document.getElementById("ProductImg");
+	var SmallImg = document.getElementsByClassName("small-img");
+	SmallImg[0].onclick=function()
+	{
+		ProductImg.src=SmallImg[0].src;
+	
+	}
+	SmallImg[1].onclick=function()
+	{
+		ProductImg.src=SmallImg[1].src;
+		
+	}
+	SmallImg[2].onclick=function()
+	{
+		ProductImg.src=SmallImg[2].src;
+	}
+	SmallImg[3].onclick=function()
+	{
+		ProductImg.src=SmallImg[3].src;
+	}
+
+</script>
+	
+</body>
+</html>
+

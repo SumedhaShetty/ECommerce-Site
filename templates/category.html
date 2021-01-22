@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width" initial-scale="1.0" >
+	<title>Categories</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<style type="text/css">
+		.categories h4{
+			text-align: center;
+		}
+		.small-container h3{
+			border: 2px solid #555;
+			margin-bottom: 25px;
+		}
+		.col-4 .rating, p{
+			text-align: center;
+		}
+		.image-crop {
+			float: none;
+			width: 350px;
+			height: 300px;
+			object-fit: cover;
+			align-content: space-evenly;
+		}
+	</style>
+
+</head>
+
+<body>
+	
+	<div class="container">
+		<div class="navbar">
+			<div class="logo"> 
+				<a href="{% url 'main_app:index' %}">
+					<P class="logo" style="
+					font-family: 'Pacifico', cursive;
+					font-size: 27px;
+					border-top: 3px solid red;
+					border-bottom: 3px solid red;
+					border:15%;">Stop2Shop</P>
+				</a>
+			</div>
+		<nav>
+			<ul id="menuitems">
+				<li><a href="{% url 'main_app:index' %}">Home</a></li>
+				<li><a href="{% url 'main_app:category' %}" >Category</a></li>
+                <li><a href="{% url 'main_app:search_product' %}" >Products</a></li>
+				<li><a href="{% url 'main_app:contact' %}">Contact Us</a></li>
+				<li><a href="/accounts/logout/">Logout</a></li>
+			</ul>
+		</nav>
+		<a href="{% url 'main_app:cart' %}">
+		<img src="{% static 'images/cart.png '%}" width="30px" height="30px;">
+		</a>
+		<img src="{% static 'images/menu.png '%}" class="menu-icon" onclick="menutoggle()">
+		</div>
+	</div>
+	
+
+<!-- clothing and accessories -->
+<div class="small-container">
+    {% for category in categories %}
+    <div class="categories">
+        <h3 style="text-align: center; color: #555;">{{  category.name }}</h3>
+        <div class="row" style="padding-left: 180px;">
+            {% for subcategory in category.cat_id.all %}
+            <div class="col-4">
+				<img src="{{ subcategory.image.url }}" class="image-crop">
+		
+                <h4><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a></h4>    
+            </div>
+            {% endfor %}   
+        </div>
+    </div>
+    {% endfor%}
+</div>
+
+</div> <!-- div for small-container -->
+
+
+<!-- footer-->
+<div class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="footer-col-1">
+				<h3>Download our App</h3>
+				<p>Download app for android and ios</p>
+				<div class="app-logo">
+					<img src="{% static 'images/play-store.png '%}">
+					<img src="{% static 'images/app-store.png '%}">
+				</div>
+			</div>
+			<div class="footer-col-2">
+				<div class="logo"> 
+					<a href="{% url 'main_app:index' %}">
+						<P class="logo" style="
+						font-family: 'Pacifico', cursive;
+						font-size: 27px;
+						color: white;
+						border-top: 3px solid red;
+						border-bottom: 3px solid red;
+						border:15%;">Stop2Shop</P>
+					</a>
+				</div>
+				<p>Our purpose is to deliver your needs to your Doorstep!</p>
+			</div>
+			<div class="footer-col-3">
+				<h3>Useful Links</h3>
+				<ul>
+					<li>Coupons</li>
+					<li>Blog Post</li>
+					<li>Return Policy</li>
+					<li>Join Affiliate</li>
+				</ul>
+			</div>
+			<div class="footer-col-4">
+				<h3>Follow Us</h3>
+				<ul>
+					<li>Facebook</li>
+					<li>Twitter</li>
+					<li>Instagram</li>
+					<li>YouTube</li>
+				</ul>
+			</div>
+		</div>
+		<hr>
+		<p class="copyright">Copyright 2020 E-Commerce</p>
+	</div>
+</div>
+</div>
+<!-- javascript for menu toggle -->
+<script type="text/javascript">
+	var menuitems=document.getElementById("menuitems");
+	menuitems.style.maxHeight="0px";
+	function menutoggle(){
+		if(menuitems.style.maxHeight=="0px"){
+			menuitems.style.maxHeight="200px";
+		}
+		else{
+			menuitems.style.maxHeight="0px";
+		}
+	}
+</script>
+
+</body>
+</html>
